@@ -9,6 +9,7 @@ public class Input {
     private List<Double> values = new ArrayList<>();
     private Integer amountOfGroups;
     private Integer size;
+    private Double deviation;
 
     public Input() {
     }
@@ -43,5 +44,13 @@ public class Input {
 
     public void setSize(Integer size) {
         this.size = size;
+    }
+
+    public Double getDeviation() {
+        return deviation;
+    }
+
+    public void setDeviation(Double deviation) {
+        this.deviation = deviation;
     }
 }

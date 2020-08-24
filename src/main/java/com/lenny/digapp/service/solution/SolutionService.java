@@ -39,9 +39,11 @@ public class SolutionService {
     public List<List<List<Double>>> solve(Input input) {
         List<Double> values = input.getValues();
         int size = input.getSize();
+        double deviation = input.getDeviation();
         List<List<Double>> solutions = generate(values, size);
-        List<List<Double>> solutionsFiltered = filter(solutions, calculateValuePerGroup(values, size));
-        return match(solutionsFiltered, input.getValues());
+        double valuePerGroup = calculateValuePerGroup(values, input.getAmountOfGroups());
+        List<List<Double>> solutionsFiltered = filter(solutions, valuePerGroup, deviation);
+        return match(solutionsFiltered, values);
     }
 
     public List<List<List<Double>>> match(List<List<Double>> solutions, List<Double> values) {
@@ -81,11 +83,11 @@ public class SolutionService {
                 .collect(Collectors.toList());
     }
 
-//    public List<List<Double>> filter(double deviation) {
-//        return solutions.stream()
-//                .filter(x -> isEqualValue(sumValue(x), valuePerGroup, deviation))
-//                .collect(Collectors.toList());
-//    }
+        public List<List<Double>> filter(List<List<Double>> values, double valuePerGroup, double deviation) {
+        return values.stream()
+                .filter(x -> isEqualValue(sumValue(x), valuePerGroup, deviation))
+                .collect(Collectors.toList());
+    }
 
     public List<List<Double>> generate(List<Double> values, int size) {
         List<int[]> combinations = generate(values.size(), size);
