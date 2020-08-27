@@ -7,7 +7,7 @@ public class Input {
 
     private String username;
     private List<Double> values = new ArrayList<>();
-    private Integer amountOfGroups;
+    private Integer groups;
     private Integer size;
     private Double deviation;
 
@@ -30,12 +30,12 @@ public class Input {
         this.values = values;
     }
 
-    public Integer getAmountOfGroups() {
-        return amountOfGroups;
+    public Integer getGroups() {
+        return groups;
     }
 
-    public void setAmountOfGroups(Integer amountOfGroups) {
-        this.amountOfGroups = amountOfGroups;
+    public void setGroups(Integer groups) {
+        this.groups = groups;
     }
 
     public Integer getSize() {

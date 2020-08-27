@@ -19,31 +19,35 @@ public class SolutionService {
 //        this.valuePerGroup = sumValue(this.values) / values.size() * size;
 //    }
 
-    private List<Double> takeTheMostValuableList(List<Double> values, int size) {
+    private List<Double> takeTheMostValuableList(List<Double> values, int groups, int size) {
         values = sortInput(values);
-        if (values.size() % size == 0) {
+        if (values.size() % groups == 0) {
             return values;
         } else {
-            List<Double> newValues = new ArrayList<>(values);
-            for (int i = 0; i < values.size(); i++) {
-                if (values.size() % size == 0) {
-                    newValues.remove(i);
-                } else {
-                    break;
-                }
+            List<Double> newValues = new ArrayList<>();
+            for (int i = groups * size; i > 0; i--) {
+                newValues.add(values.get(i));
             }
             return newValues;
         }
     }
 
     public List<List<List<Double>>> solve(Input input) {
-        List<Double> values = input.getValues();
         int size = input.getSize();
+        int groups = input.getGroups();
+
+        if(groups * size > input.getValues().size()) {
+           return new ArrayList<>();
+        }
+
+        List<Double> values = takeTheMostValuableList(input.getValues(), groups, size);
         double deviation = input.getDeviation();
         List<List<Double>> solutions = generate(values, size);
-        double valuePerGroup = calculateValuePerGroup(values, input.getAmountOfGroups());
+        double valuePerGroup = calculateValuePerGroup(values, groups);
         List<List<Double>> solutionsFiltered = filter(solutions, valuePerGroup, deviation);
         return match(solutionsFiltered, values);
+
+        //this.valuePerGroup = sumValue(this.values) / values.size() * size;
     }
 
     public List<List<List<Double>>> match(List<List<Double>> solutions, List<Double> values) {
@@ -130,8 +134,8 @@ public class SolutionService {
         return values.stream().sorted().collect(Collectors.toList());
     }
 
-    private double calculateValuePerGroup(List<Double> values, int size) {
-        return sumValue(values) / size;
+    private double calculateValuePerGroup(List<Double> values, int groups) {
+        return sumValue(values) / groups;
     }
 
     private double sumValue(List<Double> list) {
