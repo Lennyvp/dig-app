@@ -21,7 +21,7 @@ public class SolutionService {
 
     private List<Double> takeTheMostValuableList(List<Double> values, int groups, int size) {
         values = sortInput(values);
-        if (values.size() % groups == 0) {
+        if (values.size() == size * groups) {
             return values;
         } else {
             List<Double> newValues = new ArrayList<>();
@@ -46,8 +46,6 @@ public class SolutionService {
         double valuePerGroup = calculateValuePerGroup(values, groups);
         List<List<Double>> solutionsFiltered = filter(solutions, valuePerGroup, deviation);
         return match(solutionsFiltered, values);
-
-        //this.valuePerGroup = sumValue(this.values) / values.size() * size;
     }
 
     public List<List<List<Double>>> match(List<List<Double>> solutions, List<Double> values) {
